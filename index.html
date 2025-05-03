@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tau Beta Pi NU Resume E-Book</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+  <style>
+    .circle-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .container {
+      display: flex;
+      align-items: center; /* Align items vertically */
+      justify-content: space-between; /* Space out items */
+      padding: 10px;
+      background-color: #f4f4f4;
+      border-radius: 8px;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+
+    .circle-background {
+      display: inline-block;
+      background-color: white; /* White background */
+      border-radius: 50%; /* Makes it a circle */
+      padding: 10px; /* Adds space around the image */
+      margin: 20px;
+    }
+
+    .container img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .content {
+      flex: 1;
+    }
+
+    .content h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .content p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .social-links a {
+      margin-right: 10px;
+      padding: 10px 15px;
+      text-decoration: none;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .social-links .linkedin { background-color: #0077b5; }
+
+    .social-links a:hover {
+      opacity: 0.8;
+    }
+
+    /* Reserve space for profiles before they load */
+/* Adjust the profile container's width */
+    .profile-container {
+      width: 600px; /* Increased width for larger profile display */
+    }
+
+    /* Centering the profiles within the parent container */
+    #profiles-container {
+      min-height: 400px; /* Reserve space before profiles load */
+      transition: min-height 0.5s ease; /* Smooth transition when space is removed */
+      display: flex; /* Make profiles a flex container */
+      flex-wrap: wrap; /* Allow wrapping for smaller screens */
+      justify-content: center; /* Center the profiles */
+      gap: 20px; /* Optional: Add spacing between profiles */
+    }
+
+    /* Adjust the button container to align right */
+    .button-container {
+      display: flex;
+      justify-content: flex-end; /* Align button to the right */
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="w3-container w3-indigo w3-padding" id="myHeader">
+  <div class="w3-center">
+    <div class="circle-background">
+      <img src="assets/logo.png" alt="TBP Logo" class="circle-image" loading="lazy">
+    </div>
+    <h2>Tau Beta Pi Nu</h2>
+    <h1 class="w3-xxxlarge">Resume E-Book</h1>
+  </div>
+</header>
+
+<div class="w3-container w3-padding w3-center">
+  <div class="w3-row-padding w3-center" style="display: inline-block; max-width: 100%;">
+    <!-- Dropdown for selecting search category -->
+    <div class="w3-col s12 m6 l6">
+      <label for="search-category">Search by:</label>
+      <select class="w3-select" id="search-category">
+        <option value="ALL">ALL</option>
+        <option value="Aerospace">Aerospace Engineering</option>
+        <option value="Biomedical Engineering">Biomedical Engineering</option>
+        <option value="Chemical Engineering">Chemical Engineering</option>
+        <option value="Civil Engineering">Civil Engineering</option>
+        <option value="Computer Engineering">Computer Engineering</option>
+        <option value="Computer">Computer Science</option>
+        <option value="Electrical Engineering">Electrical Engineering</option>
+        <option value="Environmental Engineering">Environmental Engineering</option>
+        <option value="Materials Engineering">Materials Engineering</option>
+        <option value="Mechanical Engineering">Mechanical Engineering</option>
+      </select>
+    </div>
+
+    <!-- Search button -->
+    <div class="w3-col s12 m6 l6">
+      <label>&nbsp;</label> <!-- Empty label for spacing -->
+      <button class="w3-button w3-indigo w3-block" id="search-button">Search</button>
+    </div>
+  </div>
+</div>
+
+<!-- Profiles Section -->
+<div id="profiles-container"></div>
+
+<!-- Footer -->
+<footer class="w3-container w3-indigo w3-padding-16">
+  <h3>Learn more about our organization <a href="https://www.tbp.org/">here</a></h3>
+  <div style="position:relative;bottom:55px;" class="w3-tooltip w3-right">
+    <span class="w3-text w3-theme-light w3-padding">Go To Top</span>
+    <a class="w3-text-white" href="#myHeader"><span class="w3-xlarge">
+      <i class="fa fa-chevron-circle-up"></i></span></a>
+  </div>
+  <p>Check our socials! 
+    <a href="https://engineering.buffalo.edu/home/academics/beyond/clubs.host.html/content/shared/engineering/school-wide-content/clubs/seas/tau-beta-pi.detail.html" class="w3-btn w3-theme-light" target="_blank">
+      <i class="fa fa-graduation-cap"></i> UB Site
+    </a>
+    <a href="https://tbpnyn.square.site/" class="w3-btn w3-theme-light" target="_blank">
+      <i class="fa fa-info"></i> TBP Website
+    </a>
+    <a href="https://www.instagram.com/taubetapiub/" class="w3-btn w3-theme-light" target="_blank">
+      <i class="fa fa-instagram"></i> Instagram
+    </a>
+  </p>
+</footer>
+
+<!-- Script for creating and displaying profiles -->
+<script>
+  // Global variable to store parsed student data
+  let studentData = [];
+
+// Function to create a profile container
+// Function to create a profile container
+function createProfileContainer(profile) {
+  const container = document.createElement('div');
+  container.className = 'container w3-card w3-padding w3-margin-bottom'; // Adding some card styling and padding
+  container.style.width = '400px'; // Set a wider fixed width for the container
+
+  // Profile content container
+  const content = document.createElement('div');
+  content.className = 'w3-content';
+
+  // 1st line: Name
+  const name = document.createElement('h3');
+  name.textContent = `${profile['First Name']} ${profile['Last Name']}`;
+  name.className = 'w3-text-bold w3-left-align'; // Left-aligned name
+
+  // 2nd line: Major (on a new line, slightly bigger)
+  const major = document.createElement('h4'); // Use <h4> for slightly bigger text
+  major.textContent = `${profile['Major'] || ""}`;
+  major.className = 'w3-text-bold w3-left-align'; // Left-aligned major
+
+  // 3rd line: Status
+  const status = document.createElement('p');
+  status.textContent = `${profile['Status'] || ""}`;
+  status.className = 'w3-text-gray w3-left-align'; // Left-aligned status
+
+  // 4th line: Class
+  const classInfo = document.createElement('p');
+  classInfo.textContent = `Class: ${profile['Class'] || ""}`;
+  classInfo.className = 'w3-text-gray w3-left-align'; // Left-aligned class
+
+  // 5th line: Grad Year - Grad Month
+  const gradInfo = document.createElement('p');
+  gradInfo.textContent = `Graduation: ${profile['Grad Year'] || ""} ${profile['Grad Month'] || ""}`;
+  gradInfo.className = 'w3-text-gray w3-left-align'; // Left-aligned graduation info
+
+  // Social Links container
+  const socialLinks = document.createElement('div');
+  socialLinks.className = 'w3-right w3-margin-top'; // Aligns the buttons to the right
+
+  // CV Button (right-aligned, bigger)
+  const cvLink = document.createElement('a');
+  cvLink.href = profile['CV'];
+  cvLink.className = 'w3-btn w3-theme w3-large'; // Bigger button
+  cvLink.target = '_blank';
+  cvLink.innerHTML = '<i class="fa fa-file-pdf-o"></i> CV';
+  socialLinks.appendChild(cvLink);
+
+  // Check if LinkedIn URL exists and create LinkedIn button
+  if (profile['LinkedIn']) {
+    // Ensure the LinkedIn URL is absolute by checking if it starts with 'http' or 'https'
+    let linkedInUrl = profile['LinkedIn'];
+    if (!linkedInUrl.startsWith('http://') && !linkedInUrl.startsWith('https://')) {
+    linkedInUrl = 'https://' + linkedInUrl;
+    }
+    const linkedInLink = document.createElement('a');
+    linkedInLink.href = linkedInUrl;
+    linkedInLink.className = 'w3-btn w3-theme w3-large w3-margin-left'; // Styling for LinkedIn button
+    linkedInLink.target = '_blank';
+    linkedInLink.innerHTML = '<i class="fa fa-linkedin-square"></i>';
+    socialLinks.appendChild(linkedInLink); // Add LinkedIn button next to CV button
+  }
+
+  // Append all elements to content
+  content.appendChild(name);
+  content.appendChild(major); // Append the major on a new line
+  content.appendChild(status);
+  content.appendChild(classInfo); // Append class info on a new line
+  content.appendChild(gradInfo); // Append grad info on a new line
+  content.appendChild(socialLinks);
+
+  // Set the width of the content to match the container
+  content.style.width = '100%'; // Make content take full width of the container
+  content.style.boxSizing = 'border-box'; // Ensure padding and borders are included in the element's total width
+
+  // Append content to container
+  container.appendChild(content);
+
+  return container;
+}
+
+  // Function to display profiles on the page
+  function displayProfiles(students) {
+    const profilesContainer = document.getElementById('profiles-container');
+    profilesContainer.innerHTML = ''; // Clear existing profiles
+
+    students.forEach(student => {
+      const studentProfile = createProfileContainer(student);
+      profilesContainer.appendChild(studentProfile);
+    });
+
+    profilesContainer.style.minHeight = '0'; // Remove reserved space after loading profiles
+  }
+
+  // Function to load all profiles
+  function loadAllProfiles() {
+    displayProfiles(studentData); // Load all profiles
+  }
+
+  // Function to filter and load profiles by Major
+  function loadByMajor(major) {
+  // Convert search term and student major to lowercase for case-insensitive comparison
+  const filteredStudents = studentData.filter(student => 
+    student.Major.toLowerCase().includes(major.toLowerCase())
+  );
+
+  // Call the function to display the filtered profiles
+  displayProfiles(filteredStudents);
+}
+
+
+  // Function to fetch and parse the CSV data
+  function loadProfiles() {
+    const fileUrl = "student_data.csv";
+
+    fetch(fileUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then((data) => {
+        studentData = processCSV(data); // Store parsed student data in global variable
+        loadAllProfiles(); // Load all profiles initially
+      })
+      .catch((error) => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+  }
+
+  // Function to process CSV and convert to an array of objects
+  function processCSV(csvText) {
+    const lines = csvText.split(/\r?\n/);
+    const headers = lines[0].split(',').map(header => header.trim());
+    const dataLines = lines.slice(1);
+
+    return dataLines.map(line => {
+      const items = line.split(',').map(item => item.trim());
+      const student = {};
+      headers.forEach((header, index) => {
+        student[header] = items[index] || '';
+      });
+      return student;
+    }).filter(student => Object.keys(student).length > 1); // Filter out empty rows
+  }
+
+  // Add event listener to the search button
+  document.getElementById('search-button').addEventListener('click', function() {
+    // Get the selected value from the dropdown
+    const selectedCategory = document.getElementById('search-category').value;
+    // Call a function and pass the selected category
+    if (selectedCategory == "ALL"){
+      loadAllProfiles();
+    }
+    else{
+      loadByMajor(selectedCategory);
+    }
+  });
+
+  // Load profiles on page load
+  window.addEventListener('DOMContentLoaded', loadProfiles);
+</script>
+
+</body>
+</html>
