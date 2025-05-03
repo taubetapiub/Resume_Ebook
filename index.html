@@ -276,7 +276,7 @@ function createProfileContainer(profile) {
 
   // Function to fetch and parse the CSV data
   function loadProfiles() {
-    const fileUrl = "student_data.csv";
+    const fileUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSfJCM73_Psvd_phxPtnIGO4K1-NVuv70qkDGrFoQsMjvbfQDO-rhncld7QHSdHWg68O9XQfVJwWAZY/pub?output=csv";
 
     fetch(fileUrl)
       .then(response => {
