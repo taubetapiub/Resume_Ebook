@@ -4,16 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tau Beta Pi NU Resume E-Book</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-  <style>
+    <style>
+   .circle-background {
+      background-color: #f0f0f0;
+      padding: 4px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
     .circle-image {
       width: 200px;
       height: 200px;
       border-radius: 50%;
       object-fit: cover;
+      display: block;
     }
+
 
     .container {
       display: flex;
@@ -94,7 +104,6 @@
   </style>
 </head>
 <body>
-
 <!-- Header -->
 <header class="w3-container w3-indigo w3-padding" id="myHeader">
   <div class="w3-center">
@@ -164,85 +173,198 @@
   let studentData = [];
 
 // Function to create a profile container
-// Function to create a profile container
 function createProfileContainer(profile) {
+  // Main container with modern styling
   const container = document.createElement('div');
-  container.className = 'container w3-card w3-padding w3-margin-bottom'; // Adding some card styling and padding
-  container.style.width = '400px'; // Set a wider fixed width for the container
+  container.className = 'w3-card w3-round-large';
+  container.style.width = '420px';
+  container.style.margin = '15px';
+  container.style.overflow = 'hidden';
+  container.style.transition = 'transform 0.3s, box-shadow 0.3s';
+  container.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+  container.style.borderRadius = '12px';
+  
+  // Add hover effect
+  container.addEventListener('mouseenter', () => {
+    container.style.transform = 'translateY(-5px)';
+    container.style.boxShadow = '0 8px 16px rgba(0,0,0,0.15)';
+  });
+  
+  container.addEventListener('mouseleave', () => {
+    container.style.transform = 'translateY(0)';
+    container.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+  });
 
-  // Profile content container
-  const content = document.createElement('div');
-  content.className = 'w3-content';
+  // Header section with photo and name
+  const header = document.createElement('div');
+  header.style.background = 'linear-gradient(135deg, #3949ab, #5c6bc0)';
+  header.style.color = 'white';
+  header.style.padding = '25px 20px 65px 20px';
+  header.style.position = 'relative';
+  header.style.textAlign = 'center';
 
-  // 1st line: Name
+  // Name with improved typography
   const name = document.createElement('h3');
   name.textContent = `${profile['First Name']} ${profile['Last Name']}`;
-  name.className = 'w3-text-bold w3-left-align'; // Left-aligned name
-
-  // 2nd line: Major (on a new line, slightly bigger)
-  const major = document.createElement('h4'); // Use <h4> for slightly bigger text
-  major.textContent = `${profile['Major'] || ""}`;
-  major.className = 'w3-text-bold w3-left-align'; // Left-aligned major
-
-  // 3rd line: Status
+  name.style.margin = '0 0 5px 0';
+  name.style.fontWeight = '600';
+  name.style.fontSize = '1.4rem';
+  name.style.letterSpacing = '0.5px';
+  
+  // Status info
   const status = document.createElement('p');
   status.textContent = `${profile['Status'] || ""}`;
-  status.className = 'w3-text-gray w3-left-align'; // Left-aligned status
-
-  // 4th line: Class
-  const classInfo = document.createElement('p');
-  classInfo.textContent = `Class: ${profile['Class'] || ""}`;
-  classInfo.className = 'w3-text-gray w3-left-align'; // Left-aligned class
-
-  // 5th line: Grad Year - Grad Month
-  const gradInfo = document.createElement('p');
-  gradInfo.textContent = `Graduation: ${profile['Grad Year'] || ""} ${profile['Grad Month'] || ""}`;
-  gradInfo.className = 'w3-text-gray w3-left-align'; // Left-aligned graduation info
-
-  // Social Links container
+  status.style.margin = '0';
+  status.style.fontSize = '0.9rem';
+  status.style.opacity = '0.9';
+  
+  header.appendChild(name);
+  header.appendChild(status);
+  
+  // Profile photo (overlapping header and content)
+  const photoWrapper = document.createElement('div');
+  photoWrapper.style.position = 'absolute';
+  photoWrapper.style.bottom = '-50px';
+  photoWrapper.style.left = '50%';
+  photoWrapper.style.transform = 'translateX(-50%)';
+  photoWrapper.style.zIndex = '10';
+  photoWrapper.style.borderRadius = '50%';
+  photoWrapper.style.padding = '4px';
+  photoWrapper.style.background = 'white';
+  photoWrapper.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+  
+  const photo = document.createElement('img');
+  photo.src = profile['Photo'] ? convertDriveLinkToThumbnail(profile['Photo']) : 'assets/default-profile.png';
+  photo.alt = `${profile['First Name']} ${profile['Last Name']} Photo`;
+  photo.style.width = '100px';
+  photo.style.height = '100px';
+  photo.style.objectFit = 'cover';
+  photo.style.borderRadius = '50%';
+  photo.loading = 'lazy';
+  
+  photoWrapper.appendChild(photo);
+  header.appendChild(photoWrapper);
+  
+  // Content section with details
+  const content = document.createElement('div');
+  content.style.padding = '60px 25px 25px 25px';
+  content.style.backgroundColor = 'white';
+  
+  // Details grid with icons
+  const detailsGrid = document.createElement('div');
+  detailsGrid.style.display = 'grid';
+  detailsGrid.style.gridTemplateColumns = 'auto 1fr';
+  detailsGrid.style.gap = '8px 12px';
+  detailsGrid.style.alignItems = 'center';
+  detailsGrid.style.marginBottom = '25px';
+  
+  // Function to add detail with icon
+  const addDetailWithIcon = (iconClass, value) => {
+    if (!value) return;
+    
+    const icon = document.createElement('i');
+    icon.className = iconClass;
+    icon.style.color = '#3949ab';
+    icon.style.fontSize = '1rem';
+    icon.style.width = '20px';
+    icon.style.textAlign = 'center';
+    
+    const text = document.createElement('span');
+    text.textContent = value;
+    text.style.color = '#333';
+    text.style.fontSize = '0.95rem';
+    
+    detailsGrid.appendChild(icon);
+    detailsGrid.appendChild(text);
+  };
+  
+  // Add details with icons
+  addDetailWithIcon('fa fa-graduation-cap', profile['Major']);
+  addDetailWithIcon('fa fa-users', profile['Class']);
+  addDetailWithIcon('fa fa-calendar', `${profile['Grad Month'] || ""} ${profile['Grad Year'] || ""}`);
+  
+  content.appendChild(detailsGrid);
+  
+  // Social links with improved buttons
   const socialLinks = document.createElement('div');
-  socialLinks.className = 'w3-right w3-margin-top'; // Aligns the buttons to the right
-
-  // CV Button (right-aligned, bigger)
-  const cvLink = document.createElement('a');
-  cvLink.href = profile['CV'];
-  cvLink.className = 'w3-btn w3-theme w3-large'; // Bigger button
-  cvLink.target = '_blank';
-  cvLink.innerHTML = '<i class="fa fa-file-pdf-o"></i> CV';
-  socialLinks.appendChild(cvLink);
-
-  // Check if LinkedIn URL exists and create LinkedIn button
-  if (profile['LinkedIn']) {
-    // Ensure the LinkedIn URL is absolute by checking if it starts with 'http' or 'https'
-    let linkedInUrl = profile['LinkedIn'];
-    if (!linkedInUrl.startsWith('http://') && !linkedInUrl.startsWith('https://')) {
-    linkedInUrl = 'https://' + linkedInUrl;
+  socialLinks.style.display = 'flex';
+  socialLinks.style.justifyContent = 'center';
+  socialLinks.style.gap = '12px';
+  socialLinks.style.marginTop = '20px';
+  
+  // Function to create social button
+  const createSocialButton = (href, iconClass, bgColor, label = null) => {
+    const link = document.createElement('a');
+    link.href = href;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.style.display = 'inline-flex';
+    link.style.alignItems = 'center';
+    link.style.justifyContent = 'center';
+    link.style.padding = label ? '8px 16px' : '10px';
+    link.style.borderRadius = '50px';
+    link.style.backgroundColor = bgColor;
+    link.style.color = 'white';
+    link.style.textDecoration = 'none';
+    link.style.transition = 'all 0.3s';
+    link.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+    
+    const icon = document.createElement('i');
+    icon.className = iconClass;
+    icon.style.fontSize = '1rem';
+    
+    link.appendChild(icon);
+    
+    if (label) {
+      const text = document.createElement('span');
+      text.textContent = ` ${label}`;
+      text.style.marginLeft = '5px';
+      text.style.fontWeight = '500';
+      link.appendChild(text);
     }
-    const linkedInLink = document.createElement('a');
-    linkedInLink.href = linkedInUrl;
-    linkedInLink.className = 'w3-btn w3-theme w3-large w3-margin-left'; // Styling for LinkedIn button
-    linkedInLink.target = '_blank';
-    linkedInLink.innerHTML = '<i class="fa fa-linkedin-square"></i>';
-    socialLinks.appendChild(linkedInLink); // Add LinkedIn button next to CV button
+    
+    link.addEventListener('mouseenter', () => {
+      link.style.transform = 'translateY(-2px)';
+      link.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+    });
+    
+    link.addEventListener('mouseleave', () => {
+      link.style.transform = 'translateY(0)';
+      link.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+    });
+    
+    return link;
+  };
+  
+  // Add social buttons
+  if (profile['CV']) {
+    socialLinks.appendChild(
+      createSocialButton(profile['CV'], 'fa fa-file-pdf-o', '#e53935', 'CV')
+    );
   }
-
-  // Append all elements to content
-  content.appendChild(name);
-  content.appendChild(major); // Append the major on a new line
-  content.appendChild(status);
-  content.appendChild(classInfo); // Append class info on a new line
-  content.appendChild(gradInfo); // Append grad info on a new line
+  
+  if (profile['LinkedIn']) {
+    const linkedInUrl = profile['LinkedIn'].startsWith('http') ? profile['LinkedIn'] : `https://${profile['LinkedIn']}`;
+    socialLinks.appendChild(
+      createSocialButton(linkedInUrl, 'fa fa-linkedin', '#0077b5')
+    );
+  }
+  
+  if (profile['GitHub']) {
+    socialLinks.appendChild(
+      createSocialButton(`https://github.com/${profile['GitHub']}`, 'fa fa-github', '#333')
+    );
+  }
+  
   content.appendChild(socialLinks);
-
-  // Set the width of the content to match the container
-  content.style.width = '100%'; // Make content take full width of the container
-  content.style.boxSizing = 'border-box'; // Ensure padding and borders are included in the element's total width
-
-  // Append content to container
+  
+  // Assemble the complete profile card
+  container.appendChild(header);
   container.appendChild(content);
-
+  
   return container;
 }
+   
 
   // Function to display profiles on the page
   function displayProfiles(students) {
@@ -309,6 +431,16 @@ function createProfileContainer(profile) {
       return student;
     }).filter(student => Object.keys(student).length > 1); // Filter out empty rows
   }
+
+  function convertDriveLinkToThumbnail(url) {
+    const match = url.match(/\/d\/([a-zA-Z0-9_-]+)(?:\/|$)/);
+  if (match && match[1]) {
+    const fileId = match[1];
+    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+  }
+  return url;
+}
+
 
   // Add event listener to the search button
   document.getElementById('search-button').addEventListener('click', function() {

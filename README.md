@@ -3,7 +3,5 @@ In the event that somthing is broken or not working, blame kelly
 In the unlikley event that somthing is working, Tim may be responsible
 
 ** Usage **
-For every student, add an entry of them to student_data/student_data.csv
-Every entry should include their name, their file extension, and a link to their linkedIn. If no linkedIn, enter BLANK.
-then put their cv under student_data/cv/ with thier file extentions + pdf, and the same for their image.
-Atm I only hanlde png's. At some point I may change this if I get enough complaints
+This webpage gets is data from https://docs.google.com/spreadsheets/d/1xbkAZdMnJfges_LL4p_bAJ8dZIHz8bnkfJgeXyjQdQA/edit?usp=sharing
+But updating that google sheets you update this website. Keep the format consistst and like the orginal form.
